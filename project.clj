@@ -83,6 +83,7 @@
                  [mysql/mysql-connector-java "5.1.45"]                ;  !!! Don't upgrade to 6.0+ yet -- that's Java 8 only !!!
                  [jdistlib "0.5.1"                                    ; Distribution statistic tests
                   :exclusions [com.github.wendykierp/JTransforms]]
+                 [clojurewerkz/elastisch "3.0.0-beta2"]               ; elasticsearch client - 3.0.0-beta2
                  [net.sf.cssbox/cssbox "4.12"                         ; HTML / CSS rendering
                   :exclusions [org.slf4j/slf4j-api]]
                  [org.clojars.pntblnk/clj-ldap "0.0.12"]              ; LDAP client
