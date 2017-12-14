@@ -18,6 +18,7 @@ import {
   createParameter,
   setParameterName as setParamName,
   setParameterDefaultValue as setParamDefaultValue,
+  setParameterDisplay as setParamDisplay,
 } from "metabase/meta/Dashboard";
 import { applyParameters, questionUrlWithParameters } from "metabase/meta/Card";
 import { getParametersBySlug } from "metabase/meta/Parameter";
@@ -106,6 +107,7 @@ export const SET_PARAMETER_NAME = "metabase/dashboard/SET_PARAMETER_NAME";
 export const SET_PARAMETER_VALUE = "metabase/dashboard/SET_PARAMETER_VALUE";
 export const SET_PARAMETER_DEFAULT_VALUE =
   "metabase/dashboard/SET_PARAMETER_DEFAULT_VALUE";
+export const SET_PARAMETER_DISPLAY = "metabase/dashboard/SET_PARAMETER_DISPLAY";
 
 function getDashboardType(id) {
   if (Utils.isUUID(id)) {
@@ -707,6 +709,16 @@ export const setParameterValue = createThunkAction(
   SET_PARAMETER_VALUE,
   (parameterId, value) => (dispatch, getState) => {
     return { id: parameterId, value };
+  },
+);
+
+export const setParameterDisplay = createThunkAction(
+  SET_PARAMETER_DISPLAY,
+  (parameterId, display) => (dispatch, getState) => {
+    updateParameter(dispatch, getState, parameterId, parameter =>
+      setParamDisplay(parameter, display),
+    );    
+    return { id: parameterId, display };
   },
 );
 

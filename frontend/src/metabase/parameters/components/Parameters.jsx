@@ -36,6 +36,7 @@ type Props = {
     parameterId: ParameterId,
     defaultValue: string,
   ) => void,
+  setParameterValue?: (parameterId: ParameterId, display: boolean) => void,
   removeParameter?: (parameterId: ParameterId) => void,
   setEditingParameter?: (parameterId: ParameterId) => void,
 };
@@ -110,6 +111,7 @@ export default class Parameters extends Component {
       setParameterName,
       setParameterValue,
       setParameterDefaultValue,
+      setParameterDisplay,
       removeParameter,
       vertical,
       commitImmediately,
@@ -127,6 +129,7 @@ export default class Parameters extends Component {
         )}
       >
         {parameters.map(parameter => (
+          (isEditing || parameter.display) && 
           <ParameterWidget
             className={vertical ? "mb2" : null}
             key={parameter.id}
@@ -147,6 +150,10 @@ export default class Parameters extends Component {
             setDefaultValue={
               setParameterDefaultValue &&
               (value => setParameterDefaultValue(parameter.id, value))
+            }
+            setDisplay={
+              setParameterDisplay && 
+              (display => setParameterDisplay(parameter.id, display))
             }
             remove={removeParameter && (() => removeParameter(parameter.id))}
             commitImmediately={commitImmediately}

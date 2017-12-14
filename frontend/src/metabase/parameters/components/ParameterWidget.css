@@ -27,7 +27,7 @@
   composes: flex align-center from "style";
   font-weight: 600;
   min-height: 30px;
-  min-width: 150px;
+  min-width: 220px;
   color: var(--grey-4);
 }
 
@@ -120,11 +120,13 @@
   font-size: smaller;
 }
 
+:local(.displayToggle),
 :local(.editButton),
 :local(.removeButton) {
   composes: flex align-center cursor-pointer from "style";
 }
 
+:local(.displayToggle:hover),
 :local(.editButton:hover) {
   color: var(--brand-color);
 }

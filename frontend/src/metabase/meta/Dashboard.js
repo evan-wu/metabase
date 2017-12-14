@@ -373,6 +373,7 @@ export function createParameter(
   let parameter = {
     name: "",
     slug: "",
+    display: true,
     id: Math.floor(Math.random() * Math.pow(2, 32)).toString(16),
     type: option.type,
   };
@@ -398,5 +399,15 @@ export function setParameterDefaultValue(
   return {
     ...parameter,
     default: value,
+  };
+}
+
+export function setParameterDisplay(
+  parameter: Parameter, 
+  display: boolean
+): Parameter {
+  return {
+    ...parameter,
+    display: display
   };
 }
