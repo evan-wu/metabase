@@ -17,6 +17,7 @@ export type Parameter = {
   name: string,
   type: ParameterType,
   slug: string,
+  display: boolean,  
   default?: string,
 
   target?: ParameterTarget,
