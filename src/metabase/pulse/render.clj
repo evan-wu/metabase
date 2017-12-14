@@ -38,7 +38,7 @@
 ;;; ----------------------------------------------------- Styles -----------------------------------------------------
 
 (def ^:private ^:const card-width 400)
-(def ^:private ^:const rows-limit 20)
+(def ^:private ^:const rows-limit 100)
 (def ^:private ^:const cols-limit 10)
 (def ^:private ^:const sparkline-dot-radius 6)
 (def ^:private ^:const sparkline-thickness 3)
