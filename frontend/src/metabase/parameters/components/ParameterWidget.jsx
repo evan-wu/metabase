@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { t } from "c-3po";
 import ParameterValueWidget from "./ParameterValueWidget.jsx";
 import Icon from "metabase/components/Icon.jsx";
+import Toggle from "metabase/components/Toggle.jsx";
 
 import S from "./ParameterWidget.css";
 import cx from "classnames";
@@ -64,6 +65,7 @@ export default class ParameterWidget extends Component {
       setName,
       setValue,
       setDefaultValue,
+      setDisplay,
       remove,
     } = this.props;
 
@@ -158,6 +160,7 @@ export default class ParameterWidget extends Component {
     };
 
     const renderFieldEditingButtons = () => {
+      const on = parameter.display === undefined ? true : parameter.display;
       return (
         <FieldSet
           legend={parameter.name}
@@ -175,6 +178,10 @@ export default class ParameterWidget extends Component {
             <div className={S.removeButton} onClick={() => remove()}>
               <Icon name="close" />
               <span className="ml1">{t`Remove`}</span>
+            </div>
+            <div className={S.displayToggle}>
+              <Toggle value={on} onChange={() => setDisplay(!on)}/>
+              <span className="ml1">{t`Display`}</span>
             </div>
           </div>
         </FieldSet>

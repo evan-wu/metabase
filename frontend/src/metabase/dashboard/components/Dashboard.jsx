@@ -88,6 +88,7 @@ type Props = {
     parameterId: ParameterId,
     defaultValue: string,
   ) => void,
+  setParameterDisplay: (parameterId: ParameterId, display: string) => void,
 
   editingParameter: ?Parameter,
 
@@ -244,6 +245,7 @@ export default class Dashboard extends Component {
           setEditingParameter={this.props.setEditingParameter}
           setParameterName={this.props.setParameterName}
           setParameterDefaultValue={this.props.setParameterDefaultValue}
+          setParameterDisplay={this.props.setParameterDisplay}
           removeParameter={this.props.removeParameter}
           setParameterValue={this.props.setParameterValue}
         />
