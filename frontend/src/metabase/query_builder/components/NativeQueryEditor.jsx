@@ -272,6 +272,19 @@ export default class NativeQueryEditor extends Component {
     }
   };
 
+  setTableName = (tableName: string) => {
+    // TODO: push more of this into metabase-lib?
+    const { query } = this.props;
+    if (tableName !== query.collection()) {
+      query.updateCollection(tableName).update(this.props.setDatasetQuery);
+    }
+  };
+
+  getTableName = (): string => {
+    const { query } = this.props;
+    return query.collection();
+  }
+
   render() {
     const { query, setParameterValue, location } = this.props;
     const database = query.database();
@@ -322,6 +335,8 @@ export default class NativeQueryEditor extends Component {
               databases={[database]}
               tables={tables}
               setSourceTableFn={this.setTableId}
+              setSourceTableNameFn={this.setTableName}
+              getSourceTableNameFn={this.getTableName}
               isInitiallyOpen={false}
             />
           </div>,

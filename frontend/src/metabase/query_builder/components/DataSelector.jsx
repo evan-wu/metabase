@@ -119,14 +119,19 @@ export const SchemaAndTableDataSelector = props => (
     {...props}
   />
 );
-export const TableTriggerContent = ({ selectedTable }) =>
-  selectedTable ? (
-    <span className="text-grey no-decoration">
-      {selectedTable.display_name || selectedTable.name}
-    </span>
+export const TableTriggerContent = ({ selectedTable, onChangeTableName, getSourceTableNameFn }) => {
+  const selectedTableName = selectedTable ? selectedTable.display_name || selectedTable.name : getSourceTableNameFn();
+  return selectedTableName ? (
+    <input
+      className="AdminSelect p1 text-bold text-grey-4 bordered border-med rounded full"
+      type="text"
+      value={selectedTableName}
+      onChange={e => onChangeTableName(e.target.value)}
+    />
   ) : (
     <span className="text-grey-4 no-decoration">{t`Select a table`}</span>
   );
+}
 
 @connect(state => ({ metadata: getMetadata(state) }), { fetchTableMetadata })
 export default class DataSelector extends Component {
@@ -226,6 +231,7 @@ export default class DataSelector extends Component {
     setDatabaseFn: PropTypes.func,
     setFieldFn: PropTypes.func,
     setSourceTableFn: PropTypes.func,
+    setSourceTableNameFn: PropTypes.func,
     setSourceSegmentFn: PropTypes.func,
     isInitiallyOpen: PropTypes.bool,
     renderAsSelect: PropTypes.bool,
@@ -369,6 +375,13 @@ export default class DataSelector extends Component {
     }
   };
 
+  onChangeTableName = tableName => {
+    if (tableName != null) {
+      this.props.setSourceTableNameFn && this.props.setSourceTableNameFn(tableName);
+      this.nextStep({ selectedTable: null });
+    }
+  };
+
   onChangeField = item => {
     if (item.field != null) {
       this.props.setFieldFn && this.props.setFieldFn(item.field.id);
@@ -396,6 +409,7 @@ export default class DataSelector extends Component {
       style,
       triggerIconSize,
       getTriggerElementContent,
+      getSourceTableNameFn,
     } = this.props;
     const {
       selectedDatabase,
@@ -414,6 +428,8 @@ export default class DataSelector extends Component {
           selectedSegment,
           selectedTable,
           selectedField,
+          onChangeTableName: this.onChangeTableName,
+          getSourceTableNameFn,
         })}
         <Icon className="ml1" name="chevrondown" size={triggerIconSize || 8} />
       </span>
