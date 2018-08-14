@@ -10,6 +10,7 @@
             [metabase.query-processor.middleware.parameters.dates :as date-params]
             [metabase.query-processor.middleware.expand :as ql]
             [metabase.util :as u]
+            [metabase.util.date :as du]
             [metabase.util.schema :as su]
             [schema.core :as s]
             [toucan.db :as db])
@@ -327,15 +328,15 @@
 
   Date
   (->replacement-snippet-info [{:keys [s]}]
-    (honeysql->replacement-snippet-info (u/->Timestamp s)))
+    (honeysql->replacement-snippet-info (du/->Timestamp s)))
 
   DateRange
   (->replacement-snippet-info [{:keys [start end]}]
     (cond
-      (= start end) {:replacement-snippet "= ?",             :prepared-statement-args [(u/->Timestamp start)]}
-      (nil? start)  {:replacement-snippet "< ?",             :prepared-statement-args [(u/->Timestamp end)]}
-      (nil? end)    {:replacement-snippet "> ?",             :prepared-statement-args [(u/->Timestamp start)]}
-      :else         {:replacement-snippet "BETWEEN ? AND ?", :prepared-statement-args [(u/->Timestamp start) (u/->Timestamp end)]}))
+      (= start end) {:replacement-snippet "= ?",             :prepared-statement-args [(du/->Timestamp start)]}
+      (nil? start)  {:replacement-snippet "< ?",             :prepared-statement-args [(du/->Timestamp end)]}
+      (nil? end)    {:replacement-snippet "> ?",             :prepared-statement-args [(du/->Timestamp start)]}
+      :else         {:replacement-snippet "BETWEEN ? AND ?", :prepared-statement-args [(du/->Timestamp start) (du/->Timestamp end)]}))
 
   ;; TODO - clean this up if possible!
   Dimension

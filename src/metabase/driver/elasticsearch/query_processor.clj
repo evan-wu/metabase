@@ -13,7 +13,8 @@
             [clojurewerkz.elastisch
              [query :as qry]
              [aggregation :as agg]]
-            [metabase.util :as u])
+            [metabase.util :as u]
+            [metabase.util.date :as du])
   (:import [metabase.query_processor.interface AgFieldRef DateTimeField DateTimeValue Field RelativeDateTimeValue Value]))
 
 
@@ -26,7 +27,7 @@
   Field         (->rvalue [this] (:field-name this))
   DateTimeField (->rvalue [this] (->rvalue (:field this)))
   Value         (->rvalue [this] (:value this))
-  DateTimeValue (->rvalue [{{unit :unit} :field, value :value}] (u/format-date "yyyy-MM-dd" (u/date-trunc unit value))))
+  DateTimeValue (->rvalue [{{unit :unit} :field, value :value}] (du/format-date "yyyy-MM-dd" (du/date-trunc unit value))))
 
 (defn- flatten-row [row]
   ;(println (str "row: " row))
