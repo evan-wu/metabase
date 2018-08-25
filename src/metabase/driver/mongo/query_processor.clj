@@ -441,18 +441,32 @@
 
 ;; See https://docs.mongodb.com/manual/core/shell-types/ for a list of different supported types
 (def ^:private fn-name->decoder
-  {:ISODate    (fn [arg]
-                 (DateTime. arg))
-   :ObjectId   (fn [^String arg]
-                 (ObjectId. arg))
+  {:ISODate       (fn [arg]
+                    (DateTime. arg))
+   :YearsAgo      (fn [arg]
+                    (.minusYears(DateTime.) arg))
+   :MonthsAgo     (fn [arg]
+                    (.minusMonths(DateTime.) arg))
+   :WeeksAgo      (fn [arg]
+                    (.minusWeeks(DateTime.) arg))
+   :DaysAgo       (fn [arg]
+                    (.minusDays(DateTime.) arg))
+   :HoursAgo      (fn [arg]
+                    (.minusHours(DateTime.) arg))
+   :MinutesAgo    (fn [arg]
+                    (.minusMinutes(DateTime.) arg))
+   :SecondsAgo    (fn [arg]
+                    (.minusSeconds(DateTime.) arg))
+   :ObjectId      (fn [^String arg]
+                    (ObjectId. arg))
    ;; it looks like Date() just ignores any arguments return a date string formatted the same way the Mongo console
    ;; does
-   :Date       (fn [& _]
-                 (du/format-date "EEE MMM dd yyyy HH:mm:ss z"))
-   :NumberLong (fn [^String s]
-                 (Long/parseLong s))
-   :NumberInt  (fn [^String s]
-                 (Integer/parseInt s))})
+   :Date          (fn [& _]
+                    (du/format-date "EEE MMM dd yyyy HH:mm:ss z"))
+   :NumberLong    (fn [^String s]
+                    (Long/parseLong s))
+   :NumberInt     (fn [^String s]
+                    (Integer/parseInt s))})
 ;; we're missing NumberDecimal but not sure how that's supposed to be converted to a Java type
 
 (defn- form->encoded-fn-name
