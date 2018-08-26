@@ -20,7 +20,8 @@
   ;; params in native queries are currently only supported for SQL drivers
   (if (qputil/mbql-query? query-dict)
     (mbql-params/expand (dissoc query-dict :parameters) parameters)
-    (if (= (string/trim (str (type driver))) "class metabase.driver.elasticsearch.ElasticSearchDriver")
+    (if (or (= (string/trim (str (type driver))) "class metabase.driver.elasticsearch.ElasticSearchDriver")
+          (= (string/trim (str (type driver))) "class metabase.driver.mongo.MongoDriver"))
       (dsl-params/expand query-dict)
       (sql-params/expand query-dict))))
 
