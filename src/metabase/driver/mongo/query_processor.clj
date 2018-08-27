@@ -22,7 +22,8 @@
            [metabase.query_processor.interface AgFieldRef DateTimeField DateTimeValue Field FieldLiteral
             RelativeDateTimeValue Value]
            org.bson.types.ObjectId
-           org.joda.time.DateTime))
+           org.joda.time.DateTime
+           org.joda.time.format.ISODateTimeFormat))
 
 ;; See http://clojuremongodb.info/articles/integration.html
 ;; Loading these namespaces will load appropriate Monger integrations with JODA Time and Cheshire respectively
@@ -451,6 +452,8 @@
                     (.minusWeeks(DateTime.) arg))
    :DaysAgo       (fn [arg]
                     (.minusDays(DateTime.) arg))
+   :DaysAgoString (fn [arg]
+                    (.print(ISODateTimeFormat/dateTime) (.minusDays(.withTimeAtStartOfDay(DateTime.)) arg)))
    :HoursAgo      (fn [arg]
                     (.minusHours(DateTime.) arg))
    :MinutesAgo    (fn [arg]
