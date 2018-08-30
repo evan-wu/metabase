@@ -120,7 +120,7 @@ export const SchemaAndTableDataSelector = props => (
   />
 );
 export const TableTriggerContent = ({ selectedTable, onChangeTableName, getSourceTableNameFn }) => {
-  const selectedTableName = selectedTable ? selectedTable.display_name || selectedTable.name : getSourceTableNameFn();
+  const selectedTableName = selectedTable ? selectedTable.display_name || selectedTable.name : (getSourceTableNameFn == null ? false : getSourceTableNameFn());
   return selectedTableName ? (
     <input
       className="AdminSelect p1 text-bold text-grey-4 bordered border-med rounded full"
